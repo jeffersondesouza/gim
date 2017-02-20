@@ -14,7 +14,7 @@ import br.com.gim.blog.dao.ArtigoDAO;
 import br.com.gim.blog.model.builder.ArtigoBuilder;
 import br.com.gim.blog.model.entity.Artigo;
 
-public class SalvaArtigoTests {
+public class ArtigoTests {
 
 	ArtigoDAO artigoDao;
 	

@@ -10,24 +10,18 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.gim.blog.dao.ArtigoDAO;
 import br.com.gim.blog.dao.UsuarioDAO;
 import br.com.gim.blog.model.builder.ArtigoBuilder;
 import br.com.gim.blog.model.entity.Artigo;
 import br.com.gim.blog.model.entity.Usuario;
 
-public class PopulaDataBase {
-
+public class UsuarioTests {
 
 	UsuarioDAO usuarioDao;
-	ArtigoDAO artigoDao;
 	
 	@Before
 	public void iniciaDaos(){
 		usuarioDao = new UsuarioDAO();
-		artigoDao = new ArtigoDAO();
-		
-		artigoDao.lista();
 	}
 	
 	@Test
@@ -43,6 +37,23 @@ public class PopulaDataBase {
 	}
 	
 	
+	@Test
+	public void InsereUmUsuarioDepoisRemove() {
+		
+		int quantidadeAntesAdd = usuarioDao.lista().size();	
+		insereUsuarioComDoisArtigos();	
+		int quantidadeDepoisAdd = usuarioDao.lista().size();
+		removePrimeiroUsuario();
+		int quantidadeDepoisRemove = usuarioDao.lista().size();
+		
+		assertEquals((quantidadeAntesAdd+1),quantidadeDepoisAdd);
+		
+		assertEquals((quantidadeAntesAdd),quantidadeDepoisRemove);
+		
+	
+	}
+
+
 	private void insereUsuarioComDoisArtigos() {
 		
 		Usuario usuario = new Usuario();
@@ -74,6 +85,35 @@ public class PopulaDataBase {
 		usuarioDao.salvar(usuario);
 	}
 	
-
+	private Usuario primeiroUsuario(){
+		return usuarioDao.lista().get(0);
+	}
+	
+	
+	private void removePrimeiroUsuario(){
+	
+		Usuario usuario = primeiroUsuario();
+		
+		usuarioDao.remove(usuario);
+	
+	}
+	
+	
+	
+//	@Test
+//	public void RemoveUmArtigo() {
+//		int quantidadeAntesRemove = artigoDao.lista().size();
+//	
+//		
+//		
+//		int quantidadeDepoisRemove = artigoDao.lista().size();
+//		
+//		
+//		
+//		assertEquals((quantidadeAntesRemove-1),quantidadeDepoisRemove);
+//	}
+	
+	
+	
 
 }
